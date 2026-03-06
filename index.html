@@ -63,6 +63,11 @@
                 </div>
             </div>
 
+            <!-- High Score Display -->
+            <div class="high-score-display" id="high-score-container" style="display: none;">
+                <span class="trophy-icon">🏆</span> REKOR BAŞARI: <span id="best-score" class="best-score-value">0</span>
+            </div>
+
             <!-- Difficulty -->
             <div class="difficulty-select">
                 <h3 class="section-title">ZORLUK SEVİYESİ</h3>
@@ -82,10 +87,49 @@
                 </div>
             </div>
 
-            <button id="start-btn" class="start-button">
-                <span>🎮 BATTLE BAŞLAT</span>
-            </button>
+            <div class="start-actions">
+                <button id="start-btn" class="start-button">
+                    <span>🎮 BATTLE BAŞLAT</span>
+                </button>
+                <button id="how-to-play-btn" class="menu-button" style="margin-left: 15px;">
+                    <span>📖 NASIL OYNANIR?</span>
+                </button>
+            </div>
             <p class="controls-hint">← ↑ ↓ → veya D F J K tuşlarını kullan</p>
+        </div>
+    </div>
+
+    <!-- ============ HOW TO PLAY MODAL ============ -->
+    <div id="how-to-play-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2 class="modal-title">NASIL OYNANIR?</h2>
+            
+            <div class="instruction-grid">
+                <div class="inst-item">
+                    <div class="inst-icon">🎹</div>
+                    <p>Yukarıdan düşen oklara <b>hedef alana (en altta)</b> geldiklerinde zamanında bas!</p>
+                </div>
+                <div class="inst-item">
+                    <div class="inst-icon">⌨️</div>
+                    <p>Ok tuşları: <b>← ↑ ↓ →</b><br>veya Klavye: <b>D F J K</b></p>
+                </div>
+                <div class="inst-item">
+                    <div class="inst-icon">🕺</div>
+                    <p>Doğru zamanda basarsan karakterin <b>breakdance</b> yapmaya başlar.</p>
+                </div>
+                <div class="inst-item">
+                    <div class="inst-icon">🔥</div>
+                    <p>Puan Tablosu:<br>
+                    <span style="color:#00ff88">PERFECT:</span> Power Moves (Windmill, Flare)<br>
+                    <span style="color:#00d4ff">GREAT:</span> Footwork (Yerde seri hareketler)<br>
+                    <span style="color:#ffe100">GOOD:</span> Toprock (Havalı giriş)<br>
+                    <span style="color:#ff3355">MISS:</span> Denge kaybı!</p>
+                </div>
+            </div>
+
+            <button id="close-modal-btn" class="menu-button modal-close-btn">
+                <span>KAPAT</span>
+            </button>
         </div>
     </div>
 

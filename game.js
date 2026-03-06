@@ -54,6 +54,7 @@ class DanceGame {
         this.score = 0;
         this.combo = 0;
         this.maxCombo = 0;
+        this.bestScore = 0;
         this.hits = { perfect: 0, great: 0, good: 0, miss: 0 };
         this.difficulty = 'easy';
         this.selectedSongIndex = 0;
@@ -100,8 +101,28 @@ class DanceGame {
     }
 
     init() {
+        this.loadHighScore();
         this.populateSongList();
         this.bindEvents();
+    }
+
+    // ---- High Score ----
+    loadHighScore() {
+        const savedScore = localStorage.getItem('danceRhythmBestScore');
+        if (savedScore) {
+            this.bestScore = parseInt(savedScore, 10);
+            document.getElementById('high-score-container').style.display = 'inline-flex';
+            document.getElementById('best-score').textContent = this.bestScore.toLocaleString();
+        }
+    }
+
+    saveHighScore() {
+        if (this.score > this.bestScore) {
+            this.bestScore = this.score;
+            localStorage.setItem('danceRhythmBestScore', this.bestScore.toString());
+            document.getElementById('high-score-container').style.display = 'inline-flex';
+            document.getElementById('best-score').textContent = this.bestScore.toLocaleString();
+        }
     }
 
     // ---- Song List UI ----
@@ -155,6 +176,26 @@ class DanceGame {
                 this.audio.playMenuClick();
             });
         });
+
+        // Modals
+        const howToPlayBtn = document.getElementById('how-to-play-btn');
+        const modal = document.getElementById('how-to-play-modal');
+        const closeBtn = document.getElementById('close-modal-btn');
+
+        if (howToPlayBtn) {
+            howToPlayBtn.addEventListener('click', () => {
+                this.audio.init();
+                this.audio.playMenuClick();
+                modal.classList.remove('hidden');
+            });
+        }
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                this.audio.playMenuClick();
+                modal.classList.add('hidden');
+            });
+        }
 
         // Start
         document.getElementById('start-btn').addEventListener('click', () => {
@@ -528,7 +569,11 @@ class DanceGame {
         else if (accuracy >= 40) { grade = 'D'; gradeClass = 'grade-d'; }
         else { grade = 'F'; gradeClass = 'grade-f'; }
 
+        // Update game over screen
         document.getElementById('final-score').textContent = this.score.toLocaleString();
+        
+        // Save score if it's a new best
+        this.saveHighScore();
         document.getElementById('final-max-combo').textContent = this.maxCombo;
         document.getElementById('final-perfect').textContent = this.hits.perfect;
         document.getElementById('final-great').textContent = this.hits.great;
