@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Breakdance ritim oyunu - Guitar Hero tarzı dans oyunu!">
+    <title>🕺 Dance Rhythm - Breakdance Battle</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- ============ START SCREEN ============ -->
+    <div id="start-screen" class="screen active">
+        <div class="stars-bg"></div>
+        <div class="start-content">
+            <h1 class="game-title">
+                <span class="title-dance">DANCE</span>
+                <span class="title-rhythm">RHYTHM</span>
+            </h1>
+            <p class="subtitle">Breakdance Battle 🔥</p>
+
+            <!-- Character Selection -->
+            <div class="char-select" id="char-select">
+                <h3 class="section-title">KARAKTER SEÇ</h3>
+                <div class="char-buttons">
+                    <button class="char-btn active" data-char="bboy" id="btn-bboy">
+                        <div class="char-preview bboy-preview">
+                            <div class="stickman stickman-idle">
+                                <div class="stickman-head"></div>
+                                <div class="stickman-body"></div>
+                                <div class="stickman-arm-l"></div>
+                                <div class="stickman-arm-r"></div>
+                                <div class="stickman-leg-l"></div>
+                                <div class="stickman-leg-r"></div>
+                            </div>
+                        </div>
+                        <span class="char-name">🕺 B-Boy</span>
+                    </button>
+                    <button class="char-btn" data-char="bgirl" id="btn-bgirl">
+                        <div class="char-preview bgirl-preview">
+                            <div class="stickman stickman-idle stickman-girl">
+                                <div class="stickman-head"></div>
+                                <div class="stickman-body"></div>
+                                <div class="stickman-arm-l"></div>
+                                <div class="stickman-arm-r"></div>
+                                <div class="stickman-leg-l"></div>
+                                <div class="stickman-leg-r"></div>
+                                <div class="stickman-hair"></div>
+                            </div>
+                        </div>
+                        <span class="char-name">💃 B-Girl</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Song Selection -->
+            <div class="song-select" id="song-select">
+                <h3 class="section-title">ŞARKI SEÇ</h3>
+                <div class="song-list" id="song-list">
+                    <!-- Dynamically populated -->
+                </div>
+            </div>
+
+            <!-- Difficulty -->
+            <div class="difficulty-select">
+                <h3 class="section-title">ZORLUK SEVİYESİ</h3>
+                <div class="difficulty-buttons">
+                    <button class="diff-btn active" data-difficulty="easy" id="btn-easy">
+                        <span class="diff-icon">🌟</span>
+                        <span class="diff-name">Kolay</span>
+                    </button>
+                    <button class="diff-btn" data-difficulty="medium" id="btn-medium">
+                        <span class="diff-icon">🔥</span>
+                        <span class="diff-name">Orta</span>
+                    </button>
+                    <button class="diff-btn" data-difficulty="hard" id="btn-hard">
+                        <span class="diff-icon">💀</span>
+                        <span class="diff-name">Zor</span>
+                    </button>
+                </div>
+            </div>
+
+            <button id="start-btn" class="start-button">
+                <span>🎮 BATTLE BAŞLAT</span>
+            </button>
+            <p class="controls-hint">← ↑ ↓ → veya D F J K tuşlarını kullan</p>
+        </div>
+    </div>
+
+    <!-- ============ GAME SCREEN ============ -->
+    <div id="game-screen" class="screen">
+        <div class="game-bg">
+            <div class="bg-grid"></div>
+            <div class="bg-spotlight"></div>
+        </div>
+
+        <!-- HUD -->
+        <div id="hud">
+            <div class="hud-left">
+                <div class="score-display">
+                    <span class="hud-label">SKOR</span>
+                    <span id="score" class="score-value">0</span>
+                </div>
+                <div class="combo-display">
+                    <span class="hud-label">COMBO</span>
+                    <span id="combo" class="combo-value">0</span>
+                </div>
+            </div>
+            <div class="hud-center">
+                <div id="song-title-hud" class="song-title-hud"></div>
+                <div id="judgment" class="judgment-text"></div>
+            </div>
+            <div class="hud-right">
+                <div class="max-combo-display">
+                    <span class="hud-label">MAX COMBO</span>
+                    <span id="max-combo" class="combo-value">0</span>
+                </div>
+                <div class="progress-display">
+                    <span class="hud-label">İLERLEME</span>
+                    <div class="progress-bar">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dancer Character -->
+        <div id="dancer-container" class="dancer-container">
+            <div id="dancer" class="dancer">
+                <div class="dancer-glow"></div>
+                <div class="stickman stickman-idle" id="dancer-stickman">
+                    <div class="stickman-head"></div>
+                    <div class="stickman-body"></div>
+                    <div class="stickman-arm-l"></div>
+                    <div class="stickman-arm-r"></div>
+                    <div class="stickman-leg-l"></div>
+                    <div class="stickman-leg-r"></div>
+                </div>
+                <div class="dancer-shadow"></div>
+            </div>
+            <div class="stage-floor"></div>
+        </div>
+
+        <!-- Game Lane -->
+        <div id="game-lane">
+            <div class="lane-glow"></div>
+            <div class="lane-dividers">
+                <div class="lane-divider"></div>
+                <div class="lane-divider"></div>
+                <div class="lane-divider"></div>
+            </div>
+
+            <!-- Lane Labels -->
+            <div class="lane-labels">
+                <span class="lane-label" data-key="left">D</span>
+                <span class="lane-label" data-key="down">F</span>
+                <span class="lane-label" data-key="up">J</span>
+                <span class="lane-label" data-key="right">K</span>
+            </div>
+
+            <!-- Target Zone -->
+            <div id="target-zone">
+                <div class="target-arrow" data-key="left" id="target-left">
+                    <div class="target-glow"></div>
+                    <span class="target-symbol">◄</span>
+                </div>
+                <div class="target-arrow" data-key="down" id="target-down">
+                    <div class="target-glow"></div>
+                    <span class="target-symbol">▼</span>
+                </div>
+                <div class="target-arrow" data-key="up" id="target-up">
+                    <div class="target-glow"></div>
+                    <span class="target-symbol">▲</span>
+                </div>
+                <div class="target-arrow" data-key="right" id="target-right">
+                    <div class="target-glow"></div>
+                    <span class="target-symbol">►</span>
+                </div>
+            </div>
+
+            <!-- Arrows Container -->
+            <div id="arrows-container"></div>
+        </div>
+
+        <!-- Particles -->
+        <div id="particles-container"></div>
+
+        <!-- Combo Fire -->
+        <div id="combo-fire" class="combo-fire hidden">
+            <span class="fire-text" id="fire-text">🔥 10 COMBO!</span>
+        </div>
+    </div>
+
+    <!-- ============ GAME OVER SCREEN ============ -->
+    <div id="gameover-screen" class="screen">
+        <div class="stars-bg"></div>
+        <div class="gameover-content">
+            <h1 class="gameover-title" id="gameover-title">BATTLE BİTTİ!</h1>
+
+            <div class="grade-display">
+                <span id="grade" class="grade">S</span>
+            </div>
+
+            <div class="final-stats">
+                <div class="stat-card">
+                    <span class="stat-icon">🏆</span>
+                    <span class="stat-label">Final Skor</span>
+                    <span id="final-score" class="stat-value">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">🔥</span>
+                    <span class="stat-label">Max Combo</span>
+                    <span id="final-max-combo" class="stat-value">0</span>
+                </div>
+                <div class="stat-card perfect-card">
+                    <span class="stat-icon">✨</span>
+                    <span class="stat-label">Perfect</span>
+                    <span id="final-perfect" class="stat-value">0</span>
+                </div>
+                <div class="stat-card great-card">
+                    <span class="stat-icon">⭐</span>
+                    <span class="stat-label">Great</span>
+                    <span id="final-great" class="stat-value">0</span>
+                </div>
+                <div class="stat-card good-card">
+                    <span class="stat-icon">👍</span>
+                    <span class="stat-label">Good</span>
+                    <span id="final-good" class="stat-value">0</span>
+                </div>
+                <div class="stat-card miss-card">
+                    <span class="stat-icon">💔</span>
+                    <span class="stat-label">Miss</span>
+                    <span id="final-miss" class="stat-value">0</span>
+                </div>
+            </div>
+
+            <div class="accuracy-bar-container">
+                <span class="hud-label">DOĞRULUK</span>
+                <div class="accuracy-bar">
+                    <div id="accuracy-fill" class="accuracy-fill"></div>
+                </div>
+                <span id="accuracy-text" class="accuracy-text">0%</span>
+            </div>
+
+            <div class="gameover-buttons">
+                <button id="restart-btn" class="start-button">
+                    <span>🔄 TEKRAR OYNA</span>
+                </button>
+                <button id="menu-btn" class="menu-button">
+                    <span>🏠 ANA MENÜ</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="songs.js"></script>
+    <script src="audio-engine.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
