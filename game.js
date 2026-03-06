@@ -447,27 +447,48 @@ class DanceGame {
 
         const dancer = this.dancerStickman;
         // Remove all anim classes
-        dancer.classList.remove('dancer-hit', 'dancer-perfect', 'dancer-freeze', 'dancer-windmill', 'dancer-miss', 'stickman-idle');
+        dancer.className = 'stickman' + (this.selectedChar === 'bgirl' ? ' stickman-girl' : '');
+
+        // Calculate dynamic animation speed based on BPM
+        // Base reference is 120 BPM. Higher BPM = faster animation (shorter duration).
+        const speedMultiplier = 120 / this.currentSong.bpm;
+        
+        let animDuration = 600; // default in ms
+        let animClass = '';
 
         if (quality === 'miss') {
-            dancer.classList.add('dancer-miss');
+            animClass = 'dancer-miss';
+            animDuration = 500;
         } else if (quality === 'perfect') {
-            // Random special move for perfect
+            // Power Moves (Akrobatik, zor hareketler)
             if (this.combo > 20) {
-                dancer.classList.add('dancer-windmill');
+                animClass = 'dancer-power-flare'; // Flare animasyonu (yeni)
+                animDuration = 1000 * speedMultiplier;
             } else if (this.combo > 10) {
-                dancer.classList.add('dancer-freeze');
+                animClass = 'dancer-power-windmill';
+                animDuration = 800 * speedMultiplier;
             } else {
-                dancer.classList.add('dancer-perfect');
+                animClass = 'dancer-power-freeze';
+                animDuration = 600 * speedMultiplier;
             }
+        } else if (quality === 'great') {
+            // Footwork / Downrock (Yerde seri hareketler)
+            animClass = 'dancer-footwork-6step';
+            animDuration = 500 * speedMultiplier;
         } else {
-            dancer.classList.add('dancer-hit');
+            // Good -> Toprock (Ayakta ritim)
+            animClass = 'dancer-toprock';
+            animDuration = 400 * speedMultiplier;
         }
 
+        dancer.classList.add(animClass);
+        // Apply dynamic duration via CSS variable
+        dancer.style.setProperty('--anim-dur', `${animDuration}ms`);
+
         this.currentAnimTimeout = setTimeout(() => {
-            dancer.classList.remove('dancer-hit', 'dancer-perfect', 'dancer-freeze', 'dancer-windmill', 'dancer-miss');
-            dancer.classList.add('stickman-idle');
-        }, quality === 'miss' ? 500 : 600);
+            dancer.className = 'stickman stickman-idle' + (this.selectedChar === 'bgirl' ? ' stickman-girl' : '');
+            dancer.style.removeProperty('--anim-dur');
+        }, animDuration);
     }
 
     // ---- Combo Fire ----

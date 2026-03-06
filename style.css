@@ -612,55 +612,74 @@ body {
     margin-top: 5px;
 }
 
-/* Dancer Animations */
-.dancer-hit {
-    animation: dancerHit 0.4s ease-out;
+/* Dancer Animations - Breakdance Moves */
+/* Hız, JavaScript'ten --anim-dur değişkeni ile dinamik olarak atanır */
+.dancer-toprock {
+    animation: toprock var(--anim-dur, 400ms) ease-in-out;
 }
-@keyframes dancerHit {
+@keyframes toprock {
+    0% { transform: scale(1.5) rotate(0deg) translateY(0); }
+    25% { transform: scale(1.5) rotate(-10deg) translateY(-8px) translateX(-5px); }
+    50% { transform: scale(1.5) rotate(15deg) translateY(-5px) translateX(8px); }
+    75% { transform: scale(1.5) rotate(-5deg) translateY(-2px) translateX(-3px); }
+    100% { transform: scale(1.5) rotate(0) translateY(0) translateX(0); }
+}
+
+.dancer-footwork-6step {
+    animation: footwork6step var(--anim-dur, 500ms) cubic-bezier(0.25, 1, 0.5, 1);
+}
+@keyframes footwork6step {
+    0% { transform: scale(1.5) translateY(0); }
+    15% { transform: scale(1.5) translateY(20px) rotate(-20deg); } /* Drop down */
+    40% { transform: scale(1.5) translateY(25px) rotate(45deg) scaleX(-1); } /* Spin/leg sweep */
+    65% { transform: scale(1.5) translateY(20px) rotate(-15deg) scaleX(1); } /* Return */
+    85% { transform: scale(1.5) translateY(5px) rotate(5deg); } /* Get up */
+    100% { transform: scale(1.5) translateY(0) rotate(0); }
+}
+
+.dancer-power-freeze {
+    animation: powerFreeze var(--anim-dur, 600ms) cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+@keyframes powerFreeze {
     0% { transform: scale(1.5); }
-    30% { transform: scale(1.5) rotate(10deg) translateY(-10px); }
-    60% { transform: scale(1.5) rotate(-5deg); }
+    30% { transform: scale(1.5) rotate(180deg) translateY(-25px); } /* Handstand snap */
+    70% { transform: scale(1.5) rotate(180deg) translateY(-25px); } /* Hold Freeze */
+    85% { transform: scale(1.5) rotate(90deg) translateY(0); }
     100% { transform: scale(1.5) rotate(0deg); }
 }
 
-.dancer-perfect {
-    animation: dancerPerfect 0.6s ease-out;
+.dancer-power-windmill {
+    animation: powerWindmill var(--anim-dur, 800ms) linear;
 }
-@keyframes dancerPerfect {
-    0% { transform: scale(1.5); }
-    20% { transform: scale(1.5) rotate(15deg) translateY(-20px); }
-    50% { transform: scale(1.5) rotate(-10deg) translateY(-10px); }
-    80% { transform: scale(1.5) rotate(5deg); }
-    100% { transform: scale(1.5) rotate(0deg); }
+@keyframes powerWindmill {
+    0% { transform: scale(1.5) rotate(0deg) translateY(0); }
+    20% { transform: scale(1.5) rotate(90deg) translateY(20px); } /* Drop to back */
+    50% { transform: scale(1.5) rotate(360deg) translateY(20px); } /* Spin 1 */
+    80% { transform: scale(1.5) rotate(630deg) translateY(20px); } /* Spin 2 */
+    100% { transform: scale(1.5) rotate(720deg) translateY(0); } /* Up */
+}
+
+.dancer-power-flare {
+    animation: powerFlare var(--anim-dur, 1000ms) ease-in-out;
+}
+@keyframes powerFlare {
+    0% { transform: scale(1.5) rotate(0) translateY(0); }
+    15% { transform: scale(1.5) rotate(-30deg) translateY(-10px); } /* Prep */
+    30% { transform: scale(1.5) rotateY(180deg) rotate(45deg) translateY(-30px); } /* Side swing 1 */
+    50% { transform: scale(1.5) rotateY(360deg) rotate(-45deg) translateY(-30px); } /* Back swing */
+    70% { transform: scale(1.5) rotateY(540deg) rotate(45deg) translateY(-30px); } /* Side swing 2 */
+    85% { transform: scale(1.5) rotateY(720deg) rotate(0) translateY(-10px); } /* Recovery */
+    100% { transform: scale(1.5) rotateY(720deg) rotate(0) translateY(0); }
 }
 
 .dancer-miss {
-    animation: dancerMiss 0.5s ease-out;
+    animation: dancerMiss 500ms ease-out;
 }
 @keyframes dancerMiss {
     0% { transform: scale(1.5); }
-    30% { transform: scale(1.5) translateX(-8px) rotate(-8deg); }
-    60% { transform: scale(1.5) translateX(5px) rotate(3deg); }
+    30% { transform: scale(1.5) translateX(-8px) rotate(-15deg); } /* Stumble back */
+    60% { transform: scale(1.5) translateX(5px) translateY(5px) rotate(5deg); } /* Tripping drop */
     100% { transform: scale(1.5); }
-}
-
-.dancer-freeze {
-    animation: dancerFreeze 0.8s ease-out;
-}
-@keyframes dancerFreeze {
-    0% { transform: scale(1.5); }
-    30% { transform: scale(1.5) rotate(90deg) translateY(-15px); }
-    70% { transform: scale(1.5) rotate(90deg) translateY(-15px); }
-    100% { transform: scale(1.5) rotate(0deg); }
-}
-
-.dancer-windmill {
-    animation: dancerWindmill 0.8s ease-out;
-}
-@keyframes dancerWindmill {
-    0% { transform: scale(1.5) rotate(0deg); }
-    50% { transform: scale(1.5) rotate(180deg) translateY(-10px); }
-    100% { transform: scale(1.5) rotate(360deg); }
 }
 
 /* ============================================
